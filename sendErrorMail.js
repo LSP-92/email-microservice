@@ -1,15 +1,30 @@
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.emailSender);
 
-const creteMessage = (to, subject, idTemplate, dynamic) => {
+const createErrorMessage = (to, from, message) => {
   return {
     to: to,
-    from: "test@example.com",
-    subject: subject,
-    template_id: idTemplate,
-    ["dynamic_template_data"]: dynamic,
+    from: from,
+    subject: "Error Email Microservice",
+    html: `
+      <h1>
+      Error en el envio del correo,
+      succedio algo inesperado, por favor
+      contacte con el administrador
+      </h1>
+      <br>
+      <p>
+      No se ha podido enviar su correo,
+      revise los datos de envio y 
+      vuelva a intentarlo más tarde
+      </p>
+      <br>
+      <pre>${message}</pre>`,
   };
 };
 
-module.exports = (to, subject, idTemplate, dynamic) =>
-  sgMail.send(creteMessage(to, subject, idTemplate, dynamic));
+
+module.exports = (to, from, message) => {
+  
+  return sgMail.send(createErrorMessage(to, from, message));
+ }

@@ -4,6 +4,7 @@ require("dotenv").config();
 const amqpConnectPromise = require("./AMQPconnect");
 const testEmail = require("./lib/filterData");
 const sendMailDynamicTemplate = require("./senderMail");
+const sendErrorMail = require("./sendErrorMail")
 
 const queueName = process.env.QUEUENAME;
 
@@ -12,13 +13,14 @@ const queueName = process.env.QUEUENAME;
  * @description Funcion Async inicializa el flujo mensajes
  * Recibe un JSON como mensaje con los datos necesarios para enviar el email
  *   {
- *      "to": "email receptor",
- *      "subject": "asunto",
- *      "idTemaple": "id plantilla",
+ *      "from": email.sender
+ *      "to": email.receptor,
+ *      "idTemaple": email.idPlantilla,
  *      "dinamicContent": {
  *        "var1": "var1",
  *        "var2": "var2",
- *         "var3": "var3"
+ *         "var3": "var3"      console.log(inputMessage)
+
  *       }
  *    }
  * Llama a la funcion de envio de email
@@ -31,29 +33,41 @@ const queueName = process.env.QUEUENAME;
   try {
     const conn = await amqpConnectPromise;
     const channel = await conn.createChannel();
-
     await channel.assertQueue(queueName, {
       durable: true,
     });
-
     channel.prefetch(1);
 
     channel.consume(queueName, (msg) => {
       const inputMessage = JSON.parse(msg.content.toString("utf8"));
-      console.log(inputMessage)
-      
       sendMailDynamicTemplate(inputMessage).then((data) => {
-        console.log(data);
       }).catch((err) => {
-        console.log(err)
-        
+        sendErrorMail('luissanchez_1992@hotmail.com', 'luissanchez_1992@hotmail.com', err.toString())
+          .then()
+          .catch(err => console.log(err)
+        )
       })
 
-      if (testEmail(inputMessage) > 0) {
+      if (testEmail(inputMessage) === 2) {
+        sendErrorMail(inputMessage.from, 'luissanchez_1992@hotmail.com', '')
+          .then(
+            console.log("email al r !== 0emitente")
+
+          )
+          .catch(err => console.log(err))
         //TODO mandar correo al remitente avisando del error
+
       }
 
-      if (testEmail(inputMessage) === 2) {
+      if (testEmail(inputMessage) === 1) {
+
+        sendErrorMail('luissanchez_1992@hotmail.com', 'luissanchez_1992@hotmail.com', "Imposible mandar correo")
+          .then(
+            console.log("email al admin")
+            
+          )
+          .catch(err => console.log(err))
+
         //TODO mandar correo al administrador avisando del error
       }
 
