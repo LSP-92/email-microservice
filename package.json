@@ -4,11 +4,13 @@
   "description": "Email sender service",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./main"
   },
   "author": "Luis Sanchez Prudencio",
   "license": "GPL-3.0-or-later",
   "dependencies": {
+    "@sendgrid/mail": "^7.4.2",
     "amqplib": "^0.7.1",
     "dotenv": "^8.2.0"
   }

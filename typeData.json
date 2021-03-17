@@ -1,0 +1,10 @@
+{
+  "to": "email receptor",
+  "subject": "asunto",
+  "template_id": "id plantilla",
+  "dynamic_template_data": {
+    "var1": "var1",
+    "var2": "var2",
+    "var3": "var3"
+  }
+}
