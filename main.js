@@ -4,7 +4,7 @@ require("dotenv").config();
 const amqpConnectPromise = require("./AMQPconnect");
 const testEmail = require("./lib/filterData");
 const sendMailDynamicTemplate = require("./senderMail");
-const sendErrorMail = require("./sendErrorMail")
+const sendErrorMail = require("./sendErrorMail");
 
 const queueName = process.env.QUEUENAME;
 
@@ -12,19 +12,16 @@ const queueName = process.env.QUEUENAME;
  * @async @function
  * @description Funcion Async inicializa el flujo mensajes
  * Recibe un JSON como mensaje con los datos necesarios para enviar el email
- *   {
- *      "from": email.sender
- *      "to": email.receptor,
- *      "idTemaple": email.idPlantilla,
- *      "dinamicContent": {
- *        "var1": "var1",
- *        "var2": "var2",
- *         "var3": "var3"      console.log(inputMessage)
-
- *       }
+ * {
+ *  "to": "email@example.com",
+ *  "from": "email@example.com",
+ *  "templateId": "xxx-xxx-xxx",
+ *  "dynamicTemplateData": {
+ *    "subject": "subject",
+ *    "name": "string",
+ *    "name2": "string"
  *    }
- * Llama a la funcion de envio de email
- *
+ * }
  *
  * @returns void
  */
@@ -40,37 +37,38 @@ const queueName = process.env.QUEUENAME;
 
     channel.consume(queueName, (msg) => {
       const inputMessage = JSON.parse(msg.content.toString("utf8"));
-      sendMailDynamicTemplate(inputMessage).then((data) => {
-      }).catch((err) => {
-        sendErrorMail('luissanchez_1992@hotmail.com', 'luissanchez_1992@hotmail.com', err.toString())
-          .then()
-          .catch(err => console.log(err)
-        )
-      })
+      console.log(inputMessage)
+      /* endMailDynamicTemplate(inputMessage)
+        .then((data) => {})
+        .catch((err) => {
+          sendErrorMail(
+            "luissanchez_1992@hotmail.com",
+            "luissanchez_1992@hotmail.com",
+            err.toString()
+          )
+            .then()
+            .catch((err) => console.log(err));
+        });
 
       if (testEmail(inputMessage) === 2) {
-        sendErrorMail(inputMessage.from, 'luissanchez_1992@hotmail.com', '')
-          .then(
-            console.log("email al r !== 0emitente")
-
-          )
-          .catch(err => console.log(err))
+        sendErrorMail(inputMessage.from, "luissanchez_1992@hotmail.com", "")
+          .then(console.log("email al r !== 0emitente"))
+          .catch((err) => console.log(err));
         //TODO mandar correo al remitente avisando del error
-
       }
 
       if (testEmail(inputMessage) === 1) {
-
-        sendErrorMail('luissanchez_1992@hotmail.com', 'luissanchez_1992@hotmail.com', "Imposible mandar correo")
-          .then(
-            console.log("email al admin")
-            
-          )
-          .catch(err => console.log(err))
+        sendErrorMail(
+          "luissanchez_1992@hotmail.com",
+          "luissanchez_1992@hotmail.com",
+          "Imposible mandar correo"
+        )
+          .then(console.log("email al admin"))
+          .catch((err) => console.log(err));
 
         //TODO mandar correo al administrador avisando del error
       }
-
+ */
       channel.ack(msg);
     });
   } catch (err) {
