@@ -37,7 +37,7 @@ const queueName = process.env.QUEUENAME;
 
     channel.consume(queueName, (msg) => {
       const inputMessage = JSON.parse(msg.content.toString("utf8"));
-      console.log(inputMessage)
+      console.log(inputMessage, 'xxxxxx')
       sendMailDynamicTemplate(inputMessage)
         .then((data) => {})
         .catch((err) => {
@@ -52,7 +52,7 @@ const queueName = process.env.QUEUENAME;
 
       if (testEmail(inputMessage) === 2) {
         sendErrorMail(inputMessage.from, "luissanchez_1992@hotmail.com", "")
-          .then(console.log("email al r !== 0emitente"))
+          .then(console.log("email al remitente"))
           .catch((err) => console.log(err));
         //TODO mandar correo al remitente avisando del error
       }
