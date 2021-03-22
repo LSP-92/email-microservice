@@ -38,7 +38,7 @@ const queueName = process.env.QUEUENAME;
     channel.consume(queueName, (msg) => {
       const inputMessage = JSON.parse(msg.content.toString("utf8"));
       console.log(inputMessage)
-      /* endMailDynamicTemplate(inputMessage)
+      sendMailDynamicTemplate(inputMessage)
         .then((data) => {})
         .catch((err) => {
           sendErrorMail(
@@ -68,7 +68,6 @@ const queueName = process.env.QUEUENAME;
 
         //TODO mandar correo al administrador avisando del error
       }
- */
       channel.ack(msg);
     });
   } catch (err) {
