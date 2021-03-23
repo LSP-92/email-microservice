@@ -37,37 +37,22 @@ const queueName = process.env.QUEUENAME;
 
     channel.consume(queueName, (msg) => {
       const inputMessage = JSON.parse(msg.content.toString("utf8"));
-      console.log(inputMessage, 'xxxxxx')
+      console.log(inputMessage, "xxxxxx");
       sendMailDynamicTemplate(inputMessage)
         .then((data) => {})
         .catch((err) => {
-          sendErrorMail(
-            "luissanchez_1992@hotmail.com",
-            "luissanchez_1992@hotmail.com",
-            err.toString()
-          )
+          sendErrorMail(process.env.Email, process.env.Email, err.toString())
             .then()
             .catch((err) => console.log(err));
         });
 
       if (testEmail(inputMessage) === 2) {
-        sendErrorMail(inputMessage.from, "luissanchez_1992@hotmail.com", "")
+        sendErrorMail(process.env.Email, process.env.Email, "")
           .then(console.log("email al remitente"))
           .catch((err) => console.log(err));
         //TODO mandar correo al remitente avisando del error
       }
 
-      if (testEmail(inputMessage) === 1) {
-        sendErrorMail(
-          "luissanchez_1992@hotmail.com",
-          "luissanchez_1992@hotmail.com",
-          "Imposible mandar correo"
-        )
-          .then(console.log("email al admin"))
-          .catch((err) => console.log(err));
-
-        //TODO mandar correo al administrador avisando del error
-      }
       channel.ack(msg);
     });
   } catch (err) {
