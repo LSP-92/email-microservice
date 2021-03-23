@@ -4,7 +4,8 @@ require("dotenv").config();
 sgMail.setApiKey(process.env.emailSender);
 
 const createMessage = (to, idTemplate, dynamic) => {
-
+  console.log(process.env[idTemplate])
+  
   return {
     to: to,
     from: process.env.EMAIL,
