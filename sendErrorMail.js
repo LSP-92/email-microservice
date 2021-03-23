@@ -1,10 +1,10 @@
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.emailSender);
 
-const createErrorMessage = (to, from, message) => {
+const createErrorMessage = (to, message= '') => {
   return {
     to: to,
-    from: from,
+    from: process.env.EMAIL-ADDRESS,
     subject: "Error Email Microservice",
     html: `
       <h1>

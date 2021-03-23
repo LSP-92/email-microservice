@@ -3,18 +3,18 @@ require("dotenv").config();
 
 sgMail.setApiKey(process.env.emailSender);
 
-const createMessage = (to, from, idTemplate, dynamic) => {
+const createMessage = (to, idTemplate, dynamic) => {
 
   return {
     to: to,
-    from: from,
-    templateId: idTemplate,
+    from: process.env.EMAIL-ADDRESS,
+    templateId: process.env[idTemplate],
     dynamicTemplateData: dynamic,
   };
 };
 
-module.exports = ({ to, from, templateId, dynamicTemplateData }) => {
-  return sgMail.send(createMessage(to, from, templateId, dynamicTemplateData));
+module.exports = ({ to, templateId, dynamicTemplateData }) => {
+  return sgMail.send(createMessage(to, templateId, dynamicTemplateData));
 };
 
 //{email desde tesorero cuando realiza registrta el pago de usuario}
