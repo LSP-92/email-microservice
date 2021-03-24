@@ -46,7 +46,7 @@ const Email = process.env.ADMIN_EMAIL;
         .catch((err) => {
           sendErrorMail(Email, Email, err.toString())
             .then()
-            .catch((err) => console.log(err, '->', err.message, '->', new Date()));
+            .catch((err) => console.log(err, '->', err.message, err.response.body,'->', new Date()));
         });
 
       if (testEmail(inputMessage) === 2) {
