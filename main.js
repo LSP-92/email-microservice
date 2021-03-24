@@ -8,6 +8,8 @@ const sendMailDynamicTemplate = require('./senderMail');
 const sendErrorMail = require('./sendErrorMail');
 
 const queueName = process.env.QUEUENAME;
+const Email = process.env.ADMIN_EMAIL;
+
 
 /**
  * @async @function
@@ -42,13 +44,13 @@ const queueName = process.env.QUEUENAME;
       sendMailDynamicTemplate(inputMessage)
         .then((data) => {})
         .catch((err) => {
-          sendErrorMail(process.env.Email, process.env.Email, err.toString())
+          sendErrorMail(Email, Email, err.toString())
             .then()
             .catch((err) => console.log(err, '-->', new Date()));
         });
 
       if (testEmail(inputMessage) === 2) {
-        sendErrorMail(process.env.Email, process.env.Email, '')
+        sendErrorMail(Email, Email, '')
           .then(console.log('email al remitente'))
           .catch((err) => console.log(err));
         //TODO mandar correo al remitente avisando del error
