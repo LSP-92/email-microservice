@@ -17,3 +17,4 @@ module.exports = ({ to, templateId, dynamicTemplateData }) => {
   return sgMail.send(createMessage(to, templateId, dynamicTemplateData));
 };
 
+
