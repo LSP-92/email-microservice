@@ -44,13 +44,13 @@ const Email = process.env.ADMIN_EMAIL;
       sendMailDynamicTemplate(inputMessage)
         .then((data) => {})
         .catch((err) => {
-          sendErrorMail(Email, Email, err.toString())
+          sendErrorMail(Email, err.toString())
             .then()
             .catch((err) => console.log(err, '->', err.message, err.response.body,'->', new Date()));
         });
 
       if (testEmail(inputMessage) === 2) {
-        sendErrorMail(Email, Email, '')
+        sendErrorMail(Email, '')
           .then(console.log('email al remitente'))
           .catch((err) => console.log(err, '->', err.message, err.response.body,'->', new Date()));
         //TODO mandar correo al remitente avisando del error
