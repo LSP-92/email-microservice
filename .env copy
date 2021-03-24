@@ -1,3 +1,5 @@
 AMQP_URL_STRING=
 QUEUENAME=
 emailSender=
+EMAIL=
+SUBJECT=

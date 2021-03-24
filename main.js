@@ -1,4 +1,5 @@
 'use strict';
+
 require('dotenv').config();
 
 const amqpConnectPromise = require('./AMQPconnect');
@@ -37,13 +38,13 @@ const queueName = process.env.QUEUENAME;
 
     channel.consume(queueName, (msg) => {
       const inputMessage = JSON.parse(msg.content.toString('utf8'));
-      console.log(inputMessage, 'xxxxxx');
+      console.log('Email Input' ,'-->', new Date());
       sendMailDynamicTemplate(inputMessage)
         .then((data) => {})
         .catch((err) => {
           sendErrorMail(process.env.Email, process.env.Email, err.toString())
             .then()
-            .catch((err) => console.log(err));
+            .catch((err) => console.log(err, '-->', new Date()));
         });
 
       if (testEmail(inputMessage) === 2) {
@@ -58,7 +59,7 @@ const queueName = process.env.QUEUENAME;
   } catch (err) {
     const error = new Error('Error queue, server no response');
     error.status = 500;
-    console.log(err);
+    console.log(err,'-->', new Date());
     // TODO mandar email al administrador avisando del error
   }
 })();
