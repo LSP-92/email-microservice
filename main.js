@@ -1,10 +1,10 @@
-"use strict";
-require("dotenv").config();
+'use strict';
+require('dotenv').config();
 
-const amqpConnectPromise = require("./AMQPconnect");
-const testEmail = require("./lib/filterData");
-const sendMailDynamicTemplate = require("./senderMail");
-const sendErrorMail = require("./sendErrorMail");
+const amqpConnectPromise = require('./AMQPconnect');
+const testEmail = require('./lib/filterData');
+const sendMailDynamicTemplate = require('./senderMail');
+const sendErrorMail = require('./sendErrorMail');
 
 const queueName = process.env.QUEUENAME;
 
@@ -36,8 +36,8 @@ const queueName = process.env.QUEUENAME;
     channel.prefetch(1);
 
     channel.consume(queueName, (msg) => {
-      const inputMessage = JSON.parse(msg.content.toString("utf8"));
-      console.log(inputMessage, "xxxxxx");
+      const inputMessage = JSON.parse(msg.content.toString('utf8'));
+      console.log(inputMessage, 'xxxxxx');
       sendMailDynamicTemplate(inputMessage)
         .then((data) => {})
         .catch((err) => {
@@ -47,8 +47,8 @@ const queueName = process.env.QUEUENAME;
         });
 
       if (testEmail(inputMessage) === 2) {
-        sendErrorMail(process.env.Email, process.env.Email, "")
-          .then(console.log("email al remitente"))
+        sendErrorMail(process.env.Email, process.env.Email, '')
+          .then(console.log('email al remitente'))
           .catch((err) => console.log(err));
         //TODO mandar correo al remitente avisando del error
       }
@@ -56,7 +56,7 @@ const queueName = process.env.QUEUENAME;
       channel.ack(msg);
     });
   } catch (err) {
-    const error = new Error("Error queue, server no response");
+    const error = new Error('Error queue, server no response');
     error.status = 500;
     console.log(err);
     // TODO mandar email al administrador avisando del error

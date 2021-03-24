@@ -1,11 +1,11 @@
-const sgMail = require("@sendgrid/mail");
+const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.emailSender);
 
-const createErrorMessage = (to, message= '') => {
+const createErrorMessage = (to, message = '') => {
   return {
     to: to,
     from: process.env.EMAIL,
-    subject: "Error Email Microservice",
+    subject: 'Error Email Microservice',
     html: `
       <h1>
       Error en el envio del correo,
@@ -23,8 +23,6 @@ const createErrorMessage = (to, message= '') => {
   };
 };
 
-
 module.exports = (to, from, message) => {
-  
   return sgMail.send(createErrorMessage(to, from, message));
- }
+};
