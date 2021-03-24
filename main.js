@@ -59,6 +59,8 @@ const Email = process.env.ADMIN_EMAIL;
       channel.ack(msg);
     });
   } catch (err) {
+    console.log(err.message, 'okokok')
+    
     const error = new Error('Error queue, server no response');
     error.status = 500;
     console.log(err,'-->', new Date());
