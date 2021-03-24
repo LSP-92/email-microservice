@@ -40,13 +40,13 @@ const Email = process.env.ADMIN_EMAIL;
 
     channel.consume(queueName, (msg) => {
       const inputMessage = JSON.parse(msg.content.toString('utf8'));
-      console.log('Email Input' ,'-->', new Date());
+      console.log('Email Input' ,'------>', new Date());
       sendMailDynamicTemplate(inputMessage)
         .then((data) => {})
         .catch((err) => {
           sendErrorMail(Email, Email, err.toString())
             .then()
-            .catch((err) => console.log(err, '-->', new Date()));
+            .catch((err) => console.log(err, '->', new Date()));
         });
 
       if (testEmail(inputMessage) === 2) {
