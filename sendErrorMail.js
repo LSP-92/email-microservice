@@ -8,7 +8,7 @@ sgMail.setApiKey(process.env.emailSender);
 const createErrorMessage = (to, message = "") => {
   return {
     to: to,
-    from: process.env.EMAIL,
+    from: process.env.ADMIN_EMAIL,
     subject: "Error Email Microservice",
     html: templateError(message),
   };

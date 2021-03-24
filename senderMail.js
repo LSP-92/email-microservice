@@ -6,7 +6,7 @@ sgMail.setApiKey(process.env.emailSender);
 const createMessage = (to, idTemplate, dynamic) => {
   return {
     to: to,
-    from: process.env.EMAIL,
+    from: process.env.ADMIN_EMAIL,
     templateId: idTemplate,
     dynamicTemplateData: dynamic.data,
   };

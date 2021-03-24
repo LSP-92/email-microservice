@@ -52,7 +52,7 @@ const Email = process.env.ADMIN_EMAIL;
       if (testEmail(inputMessage) === 2) {
         sendErrorMail(Email, Email, '')
           .then(console.log('email al remitente'))
-          .catch((err) => console.log(err));
+          .catch((err) => console.log(err, '->', err.message, err.response.body,'->', new Date()));
         //TODO mandar correo al remitente avisando del error
       }
 
