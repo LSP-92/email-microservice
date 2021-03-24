@@ -9,7 +9,7 @@ const createMessage = (to, idTemplate, dynamic) => {
     from: process.env.EMAIL,
     templateId: idTemplate,
     dynamicTemplateData: {
-      dynamic:{data},
+      ...dynamic.data,
       subject:"egestion",
     }
   };
